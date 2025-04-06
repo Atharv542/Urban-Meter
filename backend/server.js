@@ -18,7 +18,11 @@ connectDB();
 const app = express();
 const _dirname=path.resolve();
 //middelwares
-app.use(cors());
+app.use(cors({
+  origin: ["https://urban-meter-frontend.vercel.app"],
+  methods:["POST","GET"],
+  credentials:true
+}));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended:false}));
