@@ -72,3 +72,4 @@ app.listen(PORT, () => {
     `Server Running on ${process.env.VITE_MONGO_URL} mode on port ${PORT}`
   );
 });
+module.exports = app;
