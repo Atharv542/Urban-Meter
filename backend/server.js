@@ -64,12 +64,16 @@ app.get("/api/place-details", async (req, res) => {
 });
 
 //PORT
+// REMOVE app.listen
 const PORT = process.env.VITE_PORT || 8080;
 
-//run listen
-app.listen(PORT, () => {
-  console.log(
-    `Server Running on ${process.env.VITE_MONGO_URL} mode on port ${PORT}`
-  );
-});
-module.exports = app;
+// Only run this locally
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// ✅ Export the app for Vercel
+export default app;
+
