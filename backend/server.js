@@ -21,6 +21,11 @@ app.use(cors({
   credentials: true,
 }));
 
+app.options('*', cors({
+  origin: "https://urban-meter-frontend.vercel.app",
+  credentials: true,
+}));
+
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
