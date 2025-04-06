@@ -15,6 +15,7 @@ const Login = () => {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials=true;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -24,7 +25,7 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = formData;
     try {
-      const res = await axios.post(`${import.meta.env.VITE_APP_API}/api/v1/auth/login`, {
+      const res = await axios.post(`https://urban-meter-backend.vercel.app/login`, {
         email,
         password,
       });

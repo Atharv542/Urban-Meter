@@ -11,7 +11,7 @@ const Register = () => {
     phone: ''
   });
   const navigate = useNavigate();
-
+  axios.defaults.withCredentials=true;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { name, email, password, phone } = formData;
-      const res = await axios.post(`${import.meta.env.VITE_APP_API}/api/v1/auth/register`, { name, email, password, phone });
+      const res = await axios.post(`https://urban-meter-backend.vercel.app/register`, { name, email, password, phone });
       if (res.data.success) {
         toast.success(res.data.message);
         navigate('/login');

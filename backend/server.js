@@ -18,7 +18,11 @@ connectDB();
 const app = express();
 const _dirname=path.resolve();
 //middelwares
-app.use(cors());
+app.use(cors({
+  origin: ["https://urban-meter-frontend.vercel.app"],
+  methods:["POST","GET"],
+  credentials:true
+}));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended:false}));
@@ -60,11 +64,16 @@ app.get("/api/place-details", async (req, res) => {
 });
 
 //PORT
+// REMOVE app.listen
 const PORT = process.env.VITE_PORT || 8080;
 
-//run listen
-app.listen(PORT, () => {
-  console.log(
-    `Server Running on ${process.env.VITE_MONGO_URL} mode on port ${PORT}`
-  );
-});
+// Only run this locally
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// ✅ Export the app for Vercel
+export default app;
+
