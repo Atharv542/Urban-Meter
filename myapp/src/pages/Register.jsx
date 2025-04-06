@@ -11,7 +11,7 @@ const Register = () => {
     phone: ''
   });
   const navigate = useNavigate();
-
+  axios.defaults.withCredentials=true;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
