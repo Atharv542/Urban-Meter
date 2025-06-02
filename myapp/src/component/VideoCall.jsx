@@ -20,7 +20,7 @@ const VideoCall = () => {
   const [emotion, setEmotion] = useState('');
 
 
-const socket = io("http://192.168.1.5:8080", {
+const socket = io("https://video-call-backend-y8v1.onrender.com", {
   transports: ["websocket"],
   withCredentials: true,
 });
