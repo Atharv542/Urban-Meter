@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -79,7 +80,8 @@ const Register = () => {
             </div>
           </form>
           <div className="mt-4 text-gray-900 text-sm text-center">
-            Already have an account? <a href="/login" className="text-gray-900 hover:underline cursor-pointer">Login</a>
+            Already have an account?<Link to="/register" className="text-gray-900 hover:underline cursor-pointer">Login</Link>
+
           </div>
         </div>
        
