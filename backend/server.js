@@ -21,10 +21,11 @@ const app = express();
 const _dirname=path.resolve();
 //middelwares
 app.use(cors({
-  origin: ["http://localhost:5173", "http://192.168.1.1:5173"], // Replace with YOUR IP
+  origin: ["https://video-call-frontend-emrt.onrender.com"], // ✅ add your live frontend URL
   methods: ["GET", "POST"],
-  credentials: true
+  credentials: true,
 }));
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended:false}));
