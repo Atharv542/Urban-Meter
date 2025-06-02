@@ -85,7 +85,7 @@ app.post("/log-call", (req, res) => {
 //rest api
 
 
-server.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, 8080, () => {
   console.log(
     `Server Running on ${process.env.MONGO_URL} mode on port ${PORT}`
   );
