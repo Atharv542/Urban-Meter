@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { name, email, password, phone } = formData;
-      const res = await axios.post(`https://urban-meter-backend.vercel.app/register`, { name, email, password, phone });
+      const res = await axios.post(`${import.meta.env.VITE_APP_API}/api/v1/auth/register`, { name, email, password, phone });
       if (res.data.success) {
         toast.success(res.data.message);
         navigate('/login');
@@ -35,47 +35,51 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-black to-purple-900 text-white px-4 py-10">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-100 to-indigo-300
+
+
+
+ text-indigo-800 px-4 py-10">
       <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold text-[#FF00FF]">Urban-Meter</h1>
-        <h2 className="text-lg text-gray-300 mt-2">Your Ultimate Travel Partner 🚖✨</h2>
+        <h1 className="text-4xl font-bold text-indigo-900">EmoCall</h1>
+        <h2 className="text-lg  text-indigo-800 mt-2">Say Hello from Anywhere!🌎📱</h2>
       </div>
       <div className="flex flex-col lg:flex-row w-full lg:w-[65%] items-center justify-center gap-10 lg:gap-20">
         <div className="w-full lg:w-[55%]  border border-white p-8 rounded-lg shadow-lg">
-          <h3 className="text-2xl font-semibold text-white mb-4 text-center">Register</h3>
+          <h3 className="text-2xl font-semibold text-gray-900 mb-4 text-center">Register</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-white">Full Name</label>
+              <label htmlFor="name" className="block text-gray-900">Full Name</label>
               <input type="text" name="name" id="name" placeholder="Enter your Name Here" 
-                className="w-full px-4 py-2 mt-1 text-white border rounded-md "
+                className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-md "
                 onChange={handleChange} value={formData.name} />
             </div>
             <div>
-              <label htmlFor="email" className="block text-white">Enter your email</label>
+              <label htmlFor="email" className="block text-gray-900">Enter your email</label>
               <input type="email" name="email" id="email" placeholder="Enter your email Here" 
-                className="w-full px-4 py-2 mt-1 border rounded-md text-white"
+                className="w-full px-4 py-2 mt-1 border rounded-md text-gray-900"
                 onChange={handleChange} value={formData.email} />
             </div>
             <div className="flex space-x-4">
               <div className="w-1/2">
-                <label htmlFor="password" className="block text-white">Password</label>
+                <label htmlFor="password" className="block text-gray-900">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter password" 
-                  className="w-full px-4 py-2 mt-1 border rounded-md text-white"
+                  className="w-full px-4 py-2 mt-1 border rounded-md text-gray-900"
                   onChange={handleChange} value={formData.password} />
               </div>
               <div className="w-1/2">
-                <label htmlFor="phone" className="block text-white">Number</label>
+                <label htmlFor="phone" className="block text-gray-900">Number</label>
                 <input type="number" name="phone" id="phone" placeholder="Enter mobile num." 
-                  className="w-full px-4 py-2 mt-1 border rounded-md text-white"
+                  className="w-full px-4 py-2 mt-1 border rounded-md text-gray-900"
                   onChange={handleChange} value={formData.phone} />
               </div>
             </div>
             <div>
-              <button type="submit" className="w-full bg-[#D4AF37] cursor-pointer text-white py-2 rounded-md font-semibold">Register</button>
+              <button type="submit" className="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white cursor-pointer py-2 rounded-md font-semibold">Register</button>
             </div>
           </form>
-          <div className="mt-4 text-gray-400 text-sm text-center">
-            Already have an account? <a href="/login" className="text-purple-300 hover:underline cursor-pointer">Login</a>
+          <div className="mt-4 text-gray-900 text-sm text-center">
+            Already have an account? <a href="/login" className="text-gray-900 hover:underline cursor-pointer">Login</a>
           </div>
         </div>
        

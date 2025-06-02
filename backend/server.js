@@ -6,6 +6,8 @@ import authRoutes from "./routes/authRoute.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import path from "path"
+import {Server} from "socket.io"
+import http from "http";
 
 //configure env
 dotenv.config();
@@ -19,60 +21,78 @@ const app = express();
 const _dirname=path.resolve();
 //middelwares
 app.use(cors({
-  origin: ["https://urban-meter-frontend.vercel.app"],
-  methods:["POST","GET"],
-  credentials:true
+  origin: ["http://localhost:5173", "http://192.168.1.1:5173"], // Replace with YOUR IP
+  methods: ["GET", "POST"],
+  credentials: true
 }));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended:false}));
 //routes
 app.use("/api/v1/auth", authRoutes);
-app.use(express.static(path.join(_dirname,"myapp/dist")));
-app.get('*',(req,res)=>{
-  res.sendFile(path.resolve(_dirname, 'myapp/dist', 'index.html'))
+app.use(express.static(path.join(_dirname, "../myapp/dist")));
+
+
+app.get("*", (req, res) => {
+  if (req.originalUrl.startsWith("/socket.io")) return;
+  res.sendFile(path.join(_dirname, "../myapp/dist", "index.html"));
+});
+const server = http.createServer(app);
+
+// ✅ Setup Socket.IO AFTER CORS and express.json
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Allow all origins for testing
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+
+// ✅ Socket.IO listeners
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
+
+  socket.on("callUser", (data) => {
+    io.to(data.userToCall).emit("incomingCall", {
+      signal: data.signalData,
+      from: data.from,
+      name: data.name,
+    });
+  });
+
+  socket.on("answerCall", (data) => {
+    io.to(data.to).emit("callAccepted", data.signal);
+  });
+});
+
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
+
+app.post("/log-call", (req, res) => {
+  const { from, to } = req.body;
+  console.log(`Logging call: From ${from} To ${to}`);
+  res.json({ success: true, message: "Call logged successfully" });
 });
 
 
 
 //rest api
-app.get("/", (req, res) => {
-  res.send("<h1>Welcome </h1>");
+
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(
+    `Server Running on ${process.env.MONGO_URL} mode on port ${PORT}`
+  );
 });
 
-const GOOGLE_API_KEY = process.env.VITE_GOOGLE_PLACE_API_KEY; // Store API key in .env file
 
-app.get("/api/place-details", async (req, res) => {
-  try {
-    const { input } = req.query;
-    const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json`,
-      {
-        params: {
-          input,
-          inputtype: "textquery",
-          fields: "place_id",
-          key: GOOGLE_API_KEY,
-        },
-      }
-    );
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error fetching place details:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
 
-//PORT
-// REMOVE app.listen
-const PORT = process.env.VITE_PORT || 8080;
-
-// Only run this locally
-if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
 
 // ✅ Export the app for Vercel
 export default app;

@@ -1,12 +1,13 @@
 {
   "dependencies": {
     "concurrently": "^9.1.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "face-api.js": "^0.22.2",
+    "simple-peer": "^9.11.1"
   },
   "scripts": {
-  "start": "concurrently \"npm run server\" \"npm run client\"",
-  "server": "cd backend && npm start",
-  "client": "cd myapp && npm start"
-}
-
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm start",
+    "client": "cd myapp && npm start"
+  }
 }
