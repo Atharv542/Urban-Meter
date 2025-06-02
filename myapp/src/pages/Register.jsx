@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+
 
 
 const Register = () => {
