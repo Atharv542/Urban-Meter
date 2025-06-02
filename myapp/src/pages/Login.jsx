@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/auth';
 import { Link } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
 
 
 const Login = () => {
@@ -116,7 +118,8 @@ const Login = () => {
         </form>
         <div className="text-center mt-4 text-sm text-gray-900">
           Don't Have an account?{" "}
-          <a href="/register" className="text-gray-900 hover:underline cursor-pointer">Register Here</a>
+          <Link to="/register" className="text-gray-900 hover:underline cursor-pointer">Register Here</Link>
+
           
           
         </div>
