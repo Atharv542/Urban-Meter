@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import Peer from "simple-peer";
 import { FaPhone, FaPhoneSlash, FaCopy } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import * as faceapi from 'face-api.js';
+
 
 const VideoCall = () => {
   const [stream, setStream] = useState();
@@ -25,34 +25,7 @@ const socket = io("https://video-call-backend-y8v1.onrender.com", {
   withCredentials: true,
 });
 
-  useEffect(() => {
-    const loadModels = async () => {
-      const MODEL_URL = '/models'; // Ensure models are in public/models
-      await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-      await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
-    };
   
-    loadModels();
-  }, []);
-  useEffect(() => {
-    let interval;
-    if (myVideo.current) {
-      interval = setInterval(async () => {
-        const detections = await faceapi
-          .detectSingleFace(myVideo.current, new faceapi.TinyFaceDetectorOptions())
-          .withFaceExpressions();
-  
-        if (detections?.expressions) {
-          const maxEmotion = Object.entries(detections.expressions).reduce((a, b) =>
-            a[1] > b[1] ? a : b
-          );
-          setEmotion(maxEmotion[0]);
-        }
-      }, 1000);
-    }
-  
-    return () => clearInterval(interval);
-  }, [myVideo]);
   
   
 
